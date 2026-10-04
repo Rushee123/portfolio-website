@@ -34,7 +34,7 @@
 - [ ] Confirm FileChanged fires for editor edits in a fresh session started from `portfolio-website/`
 
 ## Phase 2: FastAPI backend
-- [ ] Scaffold `backend/` (FastAPI, `app/main.py`, routers, settings via pydantic-settings)
+- [x] Scaffold `backend/` (FastAPI, `app/main.py`, routers, settings via pydantic-settings)
 - [ ] `GET /api/profile`, `GET /api/projects`: server-side GitHub fetch, optional `GITHUB_TOKEN`, TTL cache
 - [ ] `POST /api/contact` (validate, then log or email)
 - [ ] Backend Dockerfile + enable the `api` service in compose

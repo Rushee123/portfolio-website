@@ -1,6 +1,18 @@
-# Backend (Phase 2, not built yet)
+# Backend (Phase 2, in progress)
 
-Planned FastAPI service. See `../decisions/0007-fastapi-postgres-later.md` and the Phase 2 tasks in `../tasks.md`.
+FastAPI service. The app skeleton is in place (`app/main.py`, `app/settings.py`, `app/routers/`); endpoints come next. See `../decisions/0007-fastapi-postgres-later.md` and the Phase 2 tasks in `../tasks.md`.
+
+## Run locally
+```bash
+cd backend
+python -m venv .venv
+source .venv/Scripts/activate # Git Bash; PowerShell: .venv\Scripts\Activate.ps1; macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload # http://localhost:8000/api/docs
+```
+Settings come from env vars or `backend/.env`: `GITHUB_USERNAME` (default `Rushee123`), `GITHUB_TOKEN` (optional), `DATABASE_URL` (Phase 3).
+
+Docs live at `/api/docs` (not `/docs`) so they are reachable through the nginx `/api/` proxy.
 
 ## Planned layout
 ```

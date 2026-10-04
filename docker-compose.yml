@@ -1,0 +1,56 @@
+name: portfolio
+
+services:
+  web:
+    build:
+      context: ./frontend
+      args:
+        VITE_DATA_SOURCE: ${VITE_DATA_SOURCE:-github}
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    restart: unless-stopped
+    # Phase 2: uncomment so nginx can reach the API
+    # depends_on:
+    #   - api
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    command: ["http", "web:80", "--log=stdout"]
+    # To use a static domain, swap the line above for:
+    # command: ["http", "web:80", "--url=${NGROK_DOMAIN}", "--log=stdout"]
+    environment:
+      # Without a token ngrok exits with an auth error, but `web` still runs on localhost
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN:-}
+    ports:
+      - "4040:4040" # inspector, plus /api/tunnels for the public URL
+    depends_on:
+      - web
+    restart: unless-stopped
+
+  # ---------- Phase 2: FastAPI backend (see decisions/0007) ----------
+  # api:
+  #   build: ./backend
+  #   environment:
+  #     GITHUB_USERNAME: Rushee123
+  #     GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+  #     DATABASE_URL: postgresql+psycopg://portfolio:${POSTGRES_PASSWORD}@db:5432/portfolio
+  #   expose:
+  #     - "8000"
+  #   restart: unless-stopped
+
+  # ---------- Phase 3: Postgres ----------
+  # db:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_DB: portfolio
+  #     POSTGRES_USER: portfolio
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U portfolio"]
+  #     interval: 10s
+  #   restart: unless-stopped
+
+# volumes:
+#   pgdata:

@@ -48,3 +48,9 @@
 - [ ] Persist contact messages
 - [ ] Curated project metadata (custom blurb, screenshot, sort order) merged with GitHub data
 - [ ] Simple view counter
+
+## Phase 4: Backlog
+- [ ] Admin page with auth for curated metadata
+- [ ] GitHub Actions: build and push images
+- [ ] Static ngrok domain or real hosting
+- [ ] SEO / Open Graph meta, favicon, Lighthouse pass
